@@ -8,8 +8,10 @@ CXXFLAGS += -fpic
 SRCS = fnirt fnirt_costfunctions fnirtfns intensity_mappers invwarp make_fnirt_field matching_points phase
 
 # Additional LDFLAGS for znzlib library
-ZNZLIB_LDFLAGS = -L${HOME}/fnirt/znzlib -lfsl-znz
+ZNZLIB_LDFLAGS += -L${HOME}/fnirt/znzlib -lfsl-znz 
 
+WARPFNS_LDFLAGS = -L${HOME}/fnirt/warpfns -L${HOME}/fnirt/meshclass -L${HOME}/fnirt/basisfield -L${HOME}/fnirt/miscmaths -lfsl-warpfns -lfsl-meshclass -lfsl-basisfield -lfsl-miscmaths
+ 
 # Define object files
 OBJS = $(SRCS:.cc=.o)
 
@@ -30,17 +32,16 @@ all: ${XFILES}
 
 # Compile the final executables
 fnirt: libraries ${FNIRT_OBJS} ${LIB_OBJS}
-	${CXX} ${CXXFLAGS} -o $@ ${FNIRT_OBJS} ${LIB_OBJS} ${LDFLAGS} ${ZNZLIB_LDFLAGS} -lblas -llapack -lz
+	${CXX} ${CXXFLAGS} -o $@ ${FNIRT_OBJS} ${LIB_OBJS} ${LDFLAGS} ${ZNZLIB_LDFLAGS} ${WARPFNS_LDFLAGS} -lblas -llapack -lz
 
 invwarp: libraries ${INVWARP_OBJS} ${LIB_OBJS}
-	${CXX} ${CXXFLAGS} -o $@ ${INVWARP_OBJS} ${LIB_OBJS} ${LDFLAGS} ${ZNZLIB_LDFLAGS} -lblas -llapack -lz
+	${CXX} ${CXXFLAGS} -o $@ ${INVWARP_OBJS} ${LIB_OBJS} ${LDFLAGS} ${ZNZLIB_LDFLAGS} ${WARPFNS_LDFLAGS} -lblas -llapack -lz
 
 mapintensities: libraries ${INTMAP_OBJS} ${LIB_OBJS}
-	${CXX} ${CXXFLAGS} -o $@ ${INTMAP_OBJS} ${LIB_OBJS} ${LDFLAGS} ${ZNZLIB_LDFLAGS} -lblas -llapack -lz
+	${CXX} ${CXXFLAGS} -o $@ ${INTMAP_OBJS} ${LIB_OBJS} ${LDFLAGS} ${ZNZLIB_LDFLAGS} ${WARPFNS_LDFLAGS} -lblas -llapack -lz
 
 make_fnirt_field: libraries ${MAKE_FNIRT_FIELD_OBJS} ${LIB_OBJS}
-	${CXX} ${CXXFLAGS} -o $@ ${MAKE_FNIRT_FIELD_OBJS} ${LIB_OBJS} ${LDFLAGS} ${ZNZLIB_LDFLAGS} -lblas -llapack -lz
-
+	${CXX} ${CXXFLAGS} -o $@ ${MAKE_FNIRT_FIELD_OBJS} ${LIB_OBJS} ${LDFLAGS} ${ZNZLIB_LDFLAGS} ${WARPFNS_LDFLAGS} -lblas -llapack -lz
 
 
 # Rule to build object files
