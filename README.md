@@ -41,7 +41,7 @@ To compile fnirt, follow these steps:
 - Verify the accurate paths in meshclass's Makefile:
 Ensure the correct linker paths for the newimage, miscmaths, NewNifti, znzlib, cprob and utils libraries are included.
 
-#### Compiling: 
+- Compiling: 
 Execute the appropriate compile command to build the fnirt tool.
 ```bash
 make clean
